@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenleaf Wellness Center - Gym & Spa</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#2E7D32',secondary:'#D4A017'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .membership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .custom-checkbox {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+        }
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #f9fafb;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+        }
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #f3f4f6;
+        }
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #2E7D32;
+            border-color: #2E7D32;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .custom-checkbox .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2E7D32;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+        .gallery-item {
+            overflow: hidden;
+        }
+        .gallery-item img {
+            transition: transform 0.5s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header/Navigation -->
+    <header id="header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#home" class="text-2xl font-['Pacifico'] text-white">Greenleaf</a>
+            
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-white hover:text-gray-200 font-medium">Home</a>
+                <a href="#about" class="nav-link text-white hover:text-gray-200 font-medium">About</a>
+                <a href="#services" class="nav-link text-white hover:text-gray-200 font-medium">Services</a>
+                <a href="#gallery" class="nav-link text-white hover:text-gray-200 font-medium">Gallery</a>
+                <a href="#membership" class="nav-link text-white hover:text-gray-200 font-medium">Membership</a>
+                <a href="#contact" class="nav-link text-white hover:text-gray-200 font-medium">Contact</a>
+            </nav>
+            
+            <a href="#contact" class="hidden md:block bg-primary hover:bg-primary/90 text-white px-6 py-2 !rounded-button font-medium whitespace-nowrap transition duration-300">Book Now</a>
+            
+            <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center text-white">
+                <i class="ri-menu-line ri-2x"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full py-4 px-4 hidden">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">Home</a>
+                <a href="#about" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">About</a>
+                <a href="#services" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">Services</a>
+                <a href="#gallery" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">Gallery</a>
+                <a href="#membership" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">Membership</a>
+                <a href="#contact" class="text-gray-800 hover:text-primary py-2 border-b border-gray-100">Contact</a>
+                <a href="#contact" class="bg-primary hover:bg-primary/90 text-white text-center px-6 py-3 !rounded-button font-medium whitespace-nowrap">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/40 z-10"></div>
+        <div class="absolute inset-0 z-0">
+            <img src="https://readdy.ai/api/search-image?query=luxury%20modern%20gym%20and%20spa%20interior%20with%20green%20plants%2C%20natural%20light%2C%20wellness%20atmosphere%2C%20high-end%20equipment%2C%20relaxation%20area%2C%20elegant%20design%2C%20serene%20environment%2C%20fitness%20and%20wellness%20center%2C%20panoramic%20view%2C%20professional%20lighting%2C%20minimalist%20architecture%2C%20organic%20elements&width=1920&height=1080&seq=1&orientation=landscape" alt="Greenleaf Wellness Center" class="w-full h-full object-cover object-top">
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-20 text-center md:text-left md:ml-12">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">Your Complete Wellness Journey Starts Here</h1>
+                <p class="text-xl text-white/90 mb-8">Experience the perfect balance of fitness and relaxation at Lagos' premier wellness destination.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#membership" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 !rounded-button font-medium whitespace-nowrap transition duration-300">Join Now</a>
+                    <a href="#services" class="bg-white hover:bg-gray-100 text-primary px-8 py-3 !rounded-button font-medium whitespace-nowrap transition duration-300">Book Spa Session</a>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <a href="#about" class="w-10 h-10 flex items-center justify-center bg-white/20 backdrop-blur-sm rounded-full">
+                    <i class="ri-arrow-down-line text-white"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">About Greenleaf Wellness Center</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://readdy.ai/api/search-image?query=modern%20wellness%20center%20interior%20with%20green%20plants%2C%20natural%20materials%2C%20fitness%20equipment%2C%20spa%20area%2C%20relaxation%20spaces%2C%20high-end%20design%2C%20natural%20light%2C%20wooden%20elements%2C%20clean%20and%20minimalist%20aesthetic%2C%20professional%20photography%2C%20architectural%20details%2C%20wellness%20atmosphere&width=800&height=600&seq=2&orientation=landscape" alt="Our Facility" class="w-full h-auto rounded-lg shadow-lg">
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Where Fitness Meets Relaxation</h3>
+                    <p class="text-gray-700 mb-6">Founded in 2018, Greenleaf Wellness Center is Lagos' premier destination for holistic wellness. We combine state-of-the-art fitness facilities with luxurious spa treatments to provide a comprehensive approach to health and wellbeing.</p>
+                    
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Our Mission</h4>
+                    <p class="text-gray-700 mb-6">To create an inclusive environment where individuals can achieve their fitness goals while nurturing their mental and physical wellbeing through expert-led services and premium facilities.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                <i class="ri-award-line"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800">Excellence</h5>
+                                <p class="text-sm text-gray-600">Committed to the highest standards</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                <i class="ri-heart-line"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800">Wellness</h5>
+                                <p class="text-sm text-gray-600">Holistic approach to health</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                <i class="ri-team-line"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800">Community</h5>
+                                <p class="text-sm text-gray-600">Building connections that inspire</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                <i class="ri-recycle-line"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800">Sustainability</h5>
+                                <p class="text-sm text-gray-600">Eco-friendly practices</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Discover our comprehensive range of fitness and wellness services designed to nurture your body and mind.</p>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <!-- Gym Services -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Fitness Center</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full mb-4">
+                            <i class="ri-fitness-line ri-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">State-of-the-Art Equipment</h4>
+                        <p class="text-gray-600 mb-4">Premium cardio and strength training machines from leading brands, regularly maintained and updated.</p>
+                        <a href="#contact" class="text-primary font-medium hover:underline inline-flex items-center">
+                            Learn More <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full mb-4">
+                            <i class="ri-user-star-line ri-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">Personal Training</h4>
+                        <p class="text-gray-600 mb-4">One-on-one sessions with certified trainers to help you achieve your fitness goals safely and effectively.</p>
+                        <a href="#contact" class="text-primary font-medium hover:underline inline-flex items-center">
+                            Learn More <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full mb-4">
+                            <i class="ri-group-line ri-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">Group Classes</h4>
+                        <p class="text-gray-600 mb-4">Energizing classes including HIIT, yoga, spinning, Zumba, and more, led by experienced instructors.</p>
+                        <a href="#contact" class="text-primary font-medium hover:underline inline-flex items-center">
+                            Learn More <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Spa Services -->
+            <div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Spa & Wellness</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full mb-4">
+                            <i class="ri-massage-line ri-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">Therapeutic Massages</h4>
+                        <p class="text-gray-600 mb-4">Choose from Swedish, deep tissue, hot stone, and aromatherapy massages performed by skilled therapists.</p>
+                        <a href="#contact" class="text-primary font-medium hover:underline inline-flex items-center">
+                            Learn More <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full mb-4">
+                            <i class="ri-spa-line ri-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">Facial Treatments</h4>
+                        <p class="text-gray-600 mb-4">Rejuvenating facials using premium products to cleanse, exfoliate, and nourish your skin.</p>
+                        <a href="#contact" class="text-primary font-medium hover:underline inline-flex items-center">
+                            Learn More <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                        <div class="w-14 h-14 flex items-center justify-center bg-primary/10 text-primary rounded-full mb-4">
+                            <i class="ri-water-flash-line ri-lg"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-3">Hydrotherapy</h4>
+                        <p class="text-gray-600 mb-4">Revitalize in our steam room, sauna, and jacuzzi designed to detoxify and relax your body.</p>
+                        <a href="#contact" class="text-primary font-medium hover:underline inline-flex items-center">
+                            Learn More <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Gallery</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Take a visual tour of our premium facilities and experience what Greenleaf has to offer.</p>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex bg-gray-100 p-1 rounded-full">
+                    <button class="gallery-filter active px-4 py-2 rounded-full bg-primary text-white whitespace-nowrap" data-filter="all">All</button>
+                    <button class="gallery-filter px-4 py-2 rounded-full text-gray-700 whitespace-nowrap" data-filter="gym">Gym</button>
+                    <button class="gallery-filter px-4 py-2 rounded-full text-gray-700 whitespace-nowrap" data-filter="spa">Spa</button>
+                    <button class="gallery-filter px-4 py-2 rounded-full text-gray-700 whitespace-nowrap" data-filter="facilities">Facilities</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md" data-category="gym">
+                    <img src="https://readdy.ai/api/search-image?query=modern%20gym%20interior%20with%20high-end%20equipment%2C%20natural%20light%2C%20green%20plants%2C%20wooden%20elements%2C%20spacious%20layout%2C%20professional%20lighting%2C%20clean%20aesthetic%2C%20fitness%20center%2C%20training%20area%2C%20premium%20equipment%20brands%2C%20architectural%20details&width=600&height=400&seq=3&orientation=landscape" alt="Gym Equipment" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md" data-category="spa">
+                    <img src="https://readdy.ai/api/search-image?query=luxury%20spa%20treatment%20room%20with%20massage%20table%2C%20soft%20lighting%2C%20natural%20elements%2C%20relaxation%20ambiance%2C%20premium%20decor%2C%20wellness%20atmosphere%2C%20candles%2C%20towels%2C%20essential%20oils%2C%20professional%20spa%20setting%2C%20serene%20environment&width=600&height=400&seq=4&orientation=landscape" alt="Spa Treatment Room" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md" data-category="facilities">
+                    <img src="https://readdy.ai/api/search-image?query=modern%20wellness%20center%20reception%20area%20with%20green%20plants%2C%20natural%20materials%2C%20elegant%20furniture%2C%20professional%20lighting%2C%20minimalist%20design%2C%20high-end%20aesthetic%2C%20wooden%20elements%2C%20clean%20lines%2C%20welcoming%20atmosphere&width=600&height=400&seq=5&orientation=landscape" alt="Reception Area" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md" data-category="gym">
+                    <img src="https://readdy.ai/api/search-image?query=group%20fitness%20class%20in%20progress%2C%20modern%20studio%20with%20mirrors%2C%20wooden%20flooring%2C%20fitness%20equipment%2C%20people%20exercising%2C%20professional%20instructor%2C%20bright%20space%2C%20high%20ceilings%2C%20motivational%20atmosphere&width=600&height=400&seq=6&orientation=landscape" alt="Group Fitness Class" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md" data-category="spa">
+                    <img src="https://readdy.ai/api/search-image?query=luxury%20sauna%20and%20steam%20room%20with%20wooden%20elements%2C%20glass%20doors%2C%20ambient%20lighting%2C%20relaxation%20area%2C%20towels%2C%20water%20feature%2C%20premium%20materials%2C%20wellness%20atmosphere%2C%20spa%20facility&width=600&height=400&seq=7&orientation=landscape" alt="Sauna & Steam Room" class="w-full h-64 object-cover object-top">
+                </div>
+                
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md" data-category="facilities">
+                    <img src="https://readdy.ai/api/search-image?query=modern%20wellness%20center%20lounge%20area%20with%20comfortable%20seating%2C%20green%20plants%2C%20natural%20light%2C%20refreshment%20bar%2C%20relaxation%20space%2C%20premium%20furniture%2C%20wooden%20elements%2C%20clean%20aesthetic&width=600&height=400&seq=8&orientation=landscape" alt="Lounge Area" class="w-full h-64 object-cover object-top">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section id="membership" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Membership Plans</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Choose the perfect plan that fits your wellness journey and lifestyle.</p>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Plan -->
+                <div class="membership-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="p-6 border-b border-gray-100">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Basic Fitness</h3>
+                        <div class="flex items-end mb-4">
+                            <span class="text-3xl font-bold text-primary">₦25,000</span>
+                            <span class="text-gray-500 ml-1">/month</span>
+                        </div>
+                        <p class="text-gray-600">Perfect for beginners looking to start their fitness journey.</p>
+                    </div>
+                    
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Gym access (6 AM - 10 PM)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Basic fitness assessment</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">2 group classes per week</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-close-line text-gray-400 mr-2 mt-1"></i>
+                                <span class="text-gray-400">Personal training sessions</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-close-line text-gray-400 mr-2 mt-1"></i>
+                                <span class="text-gray-400">Spa access</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#contact" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-center px-6 py-3 !rounded-button font-medium whitespace-nowrap transition duration-300">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Premium Plan -->
+                <div class="membership-card bg-white rounded-lg shadow-xl overflow-hidden transition duration-300 transform scale-105 border-2 border-primary">
+                    <div class="bg-primary text-white text-center py-2 text-sm font-medium">
+                        MOST POPULAR
+                    </div>
+                    <div class="p-6 border-b border-gray-100">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Premium Wellness</h3>
+                        <div class="flex items-end mb-4">
+                            <span class="text-3xl font-bold text-primary">₦45,000</span>
+                            <span class="text-gray-500 ml-1">/month</span>
+                        </div>
+                        <p class="text-gray-600">Our recommended plan for a balanced fitness and wellness experience.</p>
+                    </div>
+                    
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">24/7 gym access</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Comprehensive fitness assessment</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Unlimited group classes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">2 personal training sessions/month</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Basic spa access (sauna, steam)</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#contact" class="block w-full bg-primary hover:bg-primary/90 text-white text-center px-6 py-3 !rounded-button font-medium whitespace-nowrap transition duration-300">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Luxury Plan -->
+                <div class="membership-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="p-6 border-b border-gray-100">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Luxury Elite</h3>
+                        <div class="flex items-end mb-4">
+                            <span class="text-3xl font-bold text-primary">₦75,000</span>
+                            <span class="text-gray-500 ml-1">/month</span>
+                        </div>
+                        <p class="text-gray-600">The ultimate wellness experience with exclusive benefits.</p>
+                    </div>
+                    
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">24/7 gym access with priority booking</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Advanced fitness assessment & tracking</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Unlimited group classes with reserved spots</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">4 personal training sessions/month</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="ri-check-line text-primary mr-2 mt-1"></i>
+                                <span class="text-gray-700">Full spa access with monthly treatment</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#contact" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-center px-6 py-3 !rounded-button font-medium whitespace-nowrap transition duration-300">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Have questions or ready to start your wellness journey? Get in touch with us.</p>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4"></div>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-1/2">
+                    <form id="contact-form" class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Your name">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Your email">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Your phone number">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="service" class="block text-gray-700 font-medium mb-2">Interested In</label>
+                            <div class="relative">
+                                <select id="service" class="w-full px-4 py-3 border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary pr-8">
+                                    <option value="">Select a service</option>
+                                    <option value="gym">Gym Membership</option>
+                                    <option value="spa">Spa Services</option>
+                                    <option value="personal">Personal Training</option>
+                                    <option value="classes">Group Classes</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                    <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" placeholder="Your message"></textarea>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="subscribe">
+                                <span class="checkmark"></span>
+                                <span class="ml-2 text-gray-700">Subscribe to our newsletter for wellness tips and special offers</span>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white px-6 py-3 !rounded-button font-medium whitespace-nowrap transition duration-300">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Contact Information</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Address</h5>
+                                    <p class="text-gray-600">6 Fola Jinadu Cres, off Oguntona Cresent, Pedro, Lagos 102216, Lagos</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Phone</h5>
+                                    <p class="text-gray-600">0803 727 0149</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Email</h5>
+                                    <p class="text-gray-600">info@greenleafwellness.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary rounded-full mr-3">
+                                    <i class="ri-time-line"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-gray-800">Opening Hours</h5>
+                                    <p class="text-gray-600">Monday - Friday: 6:00 AM - 10:00 PM</p>
+                                    <p class="text-gray-600">Saturday - Sunday: 8:00 AM - 8:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 flex space-x-4">
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition duration-300">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition duration-300">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition duration-300">
+                                <i class="ri-twitter-x-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 flex items-center justify-center bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition duration-300">
+                                <i class="ri-linkedin-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="rounded-lg overflow-hidden shadow-md h-80">
+                        <img src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png" alt="Location Map" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h3 class="text-2xl font-['Pacifico'] mb-4">Greenleaf</h3>
+                    <p class="text-gray-400 mb-6">Your complete wellness journey starts at Greenleaf Wellness Center, where fitness meets relaxation in a premium environment.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="ri-facebook-fill ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="ri-instagram-line ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="ri-twitter-x-line ri-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="ri-linkedin-fill ri-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Services</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white transition duration-300">Gallery</a></li>
+                        <li><a href="#membership" class="text-gray-400 hover:text-white transition duration-300">Membership</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Gym Facilities</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Personal Training</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Group Classes</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Spa Treatments</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Sauna & Steam Room</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition duration-300">Nutrition Consulting</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for wellness tips and special offers.</p>
+                    <form class="mb-4">
+                        <div class="flex">
+                            <input type="email" placeholder="Your email address" class="bg-gray-700 text-white px-4 py-2 rounded-l focus:outline-none focus:ring-2 focus:ring-primary/50 w-full">
+                            <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r whitespace-nowrap transition duration-300">Subscribe</button>
+                        </div>
+                    </form>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-400">Payment Methods:</span>
+                        <i class="ri-visa-fill text-gray-300 ri-lg"></i>
+                        <i class="ri-mastercard-fill text-gray-300 ri-lg"></i>
+                        <i class="ri-paypal-fill text-gray-300 ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">&copy; 2025 Greenleaf Wellness Center. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-sm transition duration-300">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/2348037270149?text=Hello%20Greenleaf%20Wellness%20Center,%20I'm%20interested%20in%20your%20services." class="whatsapp-btn w-14 h-14 flex items-center justify-center bg-[#25D366] text-white rounded-full shadow-lg">
+        <i class="ri-whatsapp-line ri-xl"></i>
+    </a>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top w-10 h-10 flex items-center justify-center bg-primary/80 hover:bg-primary text-white rounded-full shadow-lg transition duration-300">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script id="navigation-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.getElementById('header');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            
+            // Handle scroll events for header styling
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('bg-white', 'shadow-md');
+                    header.classList.remove('bg-transparent');
+                    
+                    // Change text color when background becomes white
+                    document.querySelectorAll('#header .nav-link').forEach(link => {
+                        link.classList.remove('text-white', 'hover:text-gray-200');
+                        link.classList.add('text-gray-800', 'hover:text-primary');
+                    });
+                    
+                    // Change logo color
+                    document.querySelector('#header .font-[\'Pacifico\']').classList.remove('text-white');
+                    document.querySelector('#header .font-[\'Pacifico\']').classList.add('text-primary');
+                    
+                    // Change menu icon color
+                    if (mobileMenuButton.querySelector('i')) {
+                        mobileMenuButton.querySelector('i').classList.remove('text-white');
+                        mobileMenuButton.querySelector('i').classList.add('text-gray-800');
+                    }
+                } else {
+                    header.classList.remove('bg-white', 'shadow-md');
+                    header.classList.add('bg-transparent');
+                    
+                    // Revert text color
+                    document.querySelectorAll('#header .nav-link').forEach(link => {
+                        link.classList.add('text-white', 'hover:text-gray-200');
+                        link.classList.remove('text-gray-800', 'hover:text-primary');
+                    });
+                    
+                    // Revert logo color
+                    document.querySelector('#header .font-[\'Pacifico\']').classList.add('text-white');
+                    document.querySelector('#header .font-[\'Pacifico\']').classList.remove('text-primary');
+                    
+                    // Revert menu icon color
+                    if (mobileMenuButton.querySelector('i')) {
+                        mobileMenuButton.querySelector('i').classList.add('text-white');
+                        mobileMenuButton.querySelector('i').classList.remove('text-gray-800');
+                    }
+                }
+            });
+            
+            // Trigger scroll event on page load
+            window.dispatchEvent(new Event('scroll'));
+            
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                
+                // Toggle icon between menu and close
+                const icon = mobileMenuButton.querySelector('i');
+                if (icon.classList.contains('ri-menu-line')) {
+                    icon.classList.remove('ri-menu-line');
+                    icon.classList.add('ri-close-line');
+                } else {
+                    icon.classList.add('ri-menu-line');
+                    icon.classList.remove('ri-close-line');
+                }
+            });
+            
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    
+                    // Reset icon to menu
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.classList.add('ri-menu-line');
+                    icon.classList.remove('ri-close-line');
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        const headerHeight = header.offsetHeight;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="gallery-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryFilters = document.querySelectorAll('.gallery-filter');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            galleryFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // Remove active class from all filters
+                    galleryFilters.forEach(f => {
+                        f.classList.remove('active', 'bg-primary', 'text-white');
+                        f.classList.add('text-gray-700');
+                    });
+                    
+                    // Add active class to clicked filter
+                    this.classList.add('active', 'bg-primary', 'text-white');
+                    this.classList.remove('text-gray-700');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide gallery items based on filter
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script id="back-to-top-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script id="form-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Simple form validation
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const service = document.getElementById('service').value;
+                    const message = document.getElementById('message').value;
+                    
+                    if (!name || !email || !phone || !service || !message) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+                    
+                    // Email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        alert('Please enter a valid email address.');
+                        return;
+                    }
+                    
+                    // Form submission would go here
+                    alert('Thank you for your message! We will get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
